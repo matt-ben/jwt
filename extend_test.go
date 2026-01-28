@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/pascaldekloe/jwt"
+	"github.com/matt-ben/jwt"
 )
 
 // JWTHeaders defines custom JOSE heading for token production.

@@ -1,3 +1,3 @@
-module github.com/pascaldekloe/jwt
+module github.com/matt-ben/jwt
 
 go 1.18

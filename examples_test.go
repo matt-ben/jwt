@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pascaldekloe/jwt"
+	"github.com/matt-ben/jwt"
 )
 
 // Note how the security model is flawed without any purpose claims.
