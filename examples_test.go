@@ -57,8 +57,36 @@ func ExampleClaims() {
 		return
 	}
 	fmt.Println(string(claims.Raw))
+
+	// Second example, with more than one audience
+	c.Audiences = []string{"armory", "stock"}
+
+	// issue a JWT
+	token, err = c.RSASign(jwt.RS256, RSAKey)
+	if err != nil {
+		fmt.Println("token creation failed on", err)
+		return
+	}
+
+	// verify a JWT
+	claims, err = jwt.RSACheck(token, &RSAKey.PublicKey)
+	if err != nil {
+		fmt.Println("credentials rejected:", err)
+		return
+	}
+	err = claims.AcceptTemporal(time.Now(), time.Second)
+	if err != nil {
+		fmt.Println("credential constraints violated:", err)
+		return
+	}
+	if !claims.AcceptAudience("armory") {
+		fmt.Println("credentials not for armory:", claims.Audiences)
+		return
+	}
+	fmt.Println(string(claims.Raw))
 	// Output:
-	// {"approved":[{"name":"RPG-7","count":1}],"aud":["armory"],"iss":"malory","sub":"sterling"}
+	// {"approved":[{"name":"RPG-7","count":1}],"aud":"armory","iss":"malory","sub":"sterling"}
+	// {"approved":[{"name":"RPG-7","count":1}],"aud":["armory","stock"],"iss":"malory","sub":"sterling"}
 }
 
 // Typed Claim Lookups

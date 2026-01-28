@@ -212,7 +212,10 @@ func (c *Claims) newToken(alg string, encSigLen int, extraHeaders []json.RawMess
 		if c.Subject != "" {
 			c.Set[subject] = c.Subject
 		}
-		if len(c.Audiences) != 0 {
+		if len(c.Audiences) == 1 {
+			c.Set[audience] = c.Audiences[0]
+		}
+		if len(c.Audiences) > 1 {
 			array := make([]interface{}, len(c.Audiences))
 			for i, s := range c.Audiences {
 				array[i] = s
